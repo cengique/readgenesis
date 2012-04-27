@@ -1,0 +1,59 @@
+# readgenesis autoconf file.
+# Cengiz Gunay 2012-04-27
+
+SHELL = /bin/sh
+
+.SUFFIXES:
+.SUFFIXES: .c
+
+CC=@CC@
+CFLAGS=@CFLAGS@
+PLAT_CFLAGS=@PLAT_CFLAGS@
+LE_CFLAGS=@LE_CFLAGS@
+BE_CFLAGS=@BE_CFLAGS@
+MEX_EXT=@MEX_EXT@
+CPU=@build_cpu@
+INSTALL_PROGRAM=@INSTALL@
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+
+MEX_DIR=mex/
+MEX_SRC=src/readgenesis.c
+
+TARGETS = $(MEX_DIR)readgenesis.$(MEX_EXT) $(MEX_DIR)readgenesis_BE.$(MEX_EXT)
+
+TARNAME = @PACKAGE_TARNAME@
+VERSION = @PACKAGE_VERSION@
+
+all: $(TARGETS)
+
+$(MEX_DIR)readgenesis.$(MEX_EXT): $(MEX_SRC)
+	mex -O CFLAGS='$$CFLAGS $(CFLAGS) $(PLAT_CFLAGS) $(LE_CFLAGS)' -output $@ $<
+
+$(MEX_DIR)readgenesis_BE.$(MEX_EXT): $(MEX_SRC)
+	mex -O CFLAGS='$$CFLAGS $(CFLAGS) $(PLAT_CFLAGS) $(BE_CFLAGS)' -output $@ $<
+
+dist: $(TARGETS)
+	mkdir $(TARNAME)
+	cp $(TARGETS) README.dist $(TARNAME)
+	tar -czf $(TARNAME)-$(VERSION).$(CPU).tar.gz $(TARNAME)
+	rm -rf $(TARNAME)
+
+srcdist: 
+	mkdir -p $(TARNAME)/src
+	cp INSTALL COPYING TODO README.dist *.[ch] configure.ac configure \
+	   Makefile.in install-sh config.sub config.guess config.h.in $(TARNAME)/src
+	cp -a ../scripts $(TARNAME)
+	cp -a ../test $(TARNAME)
+	tar -cz --exclude=.svn -f $(TARNAME)-$(VERSION).src.tar.gz $(TARNAME)
+	rm -rf $(TARNAME)
+
+install: $(TARGETS)
+	$(INSTALL_PROGRAM) $(TARGETS) @bindir@/
+
+uninstall: 
+	cd @bindir@; rm -f $(TARGETS)
+
+clean: 
+	rm -f $(TARGETS) $(MEX_DIR)readgenesis.mex* $(MEX_DIR)readgenesis.dll src/*~
