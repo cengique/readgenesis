@@ -40,6 +40,14 @@ which should create both `readgenesis` and `readgenesis_BE` (bigendian) MEX exec
  
 which will give you the usage help.
 
+Pre-compiled binaries
+---------------------
+
+Under the `mex/` directory, you can find several pre-compiled binaries. Place them in the Matlab path and use like in the above example.
+
+Manual Compile
+--------------
+
 Alternatively, you can compile manually. Any cc compiler should work ([ ] = optional). To compile:
 * In Winblows (MS Visual C++ 6.x):
 
