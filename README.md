@@ -21,21 +21,22 @@ History
     Alfonso Delgado-Reyes 07.03.2002
 
 * Adapted for MATLAB 5.x and 6.x under:
-        - Linux x86/PPC, September 2002
-        - MS Windows, September 2002
-        - Mac OS 7-9, September 2002
-        - Mac OS X 10.x, September 2002
+
+    - Linux x86/PPC, September 2002
+    - MS Windows, September 2002
+    - Mac OS 7-9, September 2002
+    - Mac OS X 10.x, September 2002
    
 Instructions
 ------------
 
 Type:
 
-  make
+    make
 
 which should create both `readgenesis` and `readgenesis_BE` (bigendian) MEX executables. Place them in the Matlab path. In Matlab, they can be accessed by typing:
 
- >> readgendbin([])
+    >> readgendbin([])
  
 which will give you the usage help.
 
